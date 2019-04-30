@@ -1,0 +1,33 @@
+{
+  "name": "gonativeDesafio3",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-plugin-root-import": "^6.1.0",
+    "eslint-import-resolver-babel-plugin-root-import": "^1.1.1",
+    "prop-types": "^15.7.2",
+    "react": "16.8.3",
+    "react-devtools": "^3.6.1",
+    "react-native": "0.59.5",
+    "react-native-gesture-handler": "^1.1.0",
+    "reactotron-react-native": "^3.2.2",
+    "redux": "^4.0.1",
+    "redux-saga": "^1.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/runtime": "^7.4.4",
+    "babel-jest": "^24.7.1",
+    "jest": "^24.7.1",
+    "metro-react-native-babel-preset": "^0.53.1",
+    "react-test-renderer": "16.8.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
