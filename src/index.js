@@ -1,9 +1,16 @@
 import "~/config/ReactotronConfig";
 import "~/config/DevToolsConfig";
 import React from "react";
-import { View } from "react-native";
-// import Mapa from "~/components/Mapa";
+import Map from "~/components/Map";
+import ModalNative from "~/components/Modal";
+import { Provider } from "react-redux";
+import store from "~/store";
 
-const App = () => <View />;
+const App = () => (
+  <Provider store={store}>
+    <Map />
+    <ModalNative />
+  </Provider>
+);
 
 export default App;
