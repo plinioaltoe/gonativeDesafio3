@@ -14,16 +14,30 @@ import { Creators as RepositoryActions } from "~/store/ducks/repository";
 import { styles } from "./styles";
 
 class ModalNative extends Component {
-  setmodalOpen(visible) {
-    this.setState({ modalVisible: visible });
-  }
+  state = {
+    repoName: ""
+  };
+
+  _onAdd = () => {
+    const { addRepositoryRequest } = this.props;
+    const { repoName } = this.state;
+    addRepositoryRequest(repoName);
+    this.setState({ repoName: "" });
+  };
+
+  _closeModal = () => {
+    const { changeStateModal } = this.props;
+    changeStateModal();
+    this.setState({ repoName: "" });
+  };
 
   render() {
     const { repos, changeStateModal } = this.props;
-    const { modalOpen, coords } = repos;
-    console.tron.log(modalOpen, coords);
+    const { modalOpen } = repos;
+    const { repoName } = this.state;
+
     return (
-      <Modal animationType="fade" transparent={false} visible={modalOpen}>
+      <Modal animationType="fade" transparent={true} visible={modalOpen}>
         <KeyboardAvoidingView
           style={styles.modalContainer}
           behavior="padding"
@@ -35,14 +49,17 @@ class ModalNative extends Component {
               style={styles.boxInput}
               autoCapitalize="none"
               autoCorrect={false}
-              placeholder="Adicionar novo repositório"
+              placeholder="Digite o nome do usuário"
               underlineColorAndroid="transparent"
-              onChangeText={text => {}}
+              value={repoName}
+              onChangeText={repoName => {
+                this.setState({ repoName });
+              }}
             />
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={[styles.button, styles.cancelButton]}
-                onPress={changeStateModal}
+                onPress={this._closeModal}
               >
                 <Text style={styles.buttonText}>Cancelar</Text>
               </TouchableOpacity>

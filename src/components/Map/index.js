@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import MapView from "react-native-maps";
+import MapView, { Callout, Marker } from "react-native-maps";
 import PropTypes from "prop-types";
-import { View } from "react-native";
+import { View, Image } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Creators as RepositoryActions } from "~/store/ducks/repository";
+
+import { styles } from "./styles";
 
 class Map extends Component {
   static propTypes = {
@@ -20,24 +22,47 @@ class Map extends Component {
     }
   };
 
+  _openModal = e => {
+    e.persist();
+    const { changeStateModal } = this.props;
+    changeStateModal(e.nativeEvent);
+  };
+
   render() {
     const { region } = this.state;
-    const { changeStateModal } = this.props;
+    const { repos } = this.props;
+
     return (
       <View style={{ flex: 1 }}>
         <MapView
           style={{ flex: 1 }}
           region={region}
           loadingEnabled
-          onLongPress={e => changeStateModal(e.nativeEvent)}
-        />
+          onLongPress={this._openModal}
+        >
+          {repos &&
+            repos.map(repo => (
+              <Marker
+                key={repo.id}
+                coordinate={repo.coordinate}
+                title={repo.name}
+                description={repo.bio}
+              >
+                <Image
+                  style={styles.avatarMap}
+                  alt="avatar"
+                  source={{ uri: repo.avatar_url }}
+                />
+              </Marker>
+            ))}
+        </MapView>
       </View>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  repos: state.repository
+  repos: state.repository.data
 });
 
 const mapDispatchToProps = dispatch =>

@@ -31,7 +31,7 @@ export default function repository(state = INITIAL_STATE, action) {
         loading: false,
         error: null,
         modalOpen: false,
-        data: [...state.data, action.payload.data]
+        data: [...state.data, { ...action.payload.data, ...state.coords }]
       };
     case Types.ADD_FAILURE:
       return { ...state, loading: false, error: action.payload.error };
@@ -64,9 +64,9 @@ export const Creators = {
     payload: { id }
   }),
 
-  addRepositoryRequest: ({ repository, latitude, longitude }) => ({
+  addRepositoryRequest: repoName => ({
     type: Types.ADD_REQUEST,
-    payload: { repository, latitude, longitude }
+    payload: { repoName }
   }),
 
   addRepositorySuccess: data => ({
